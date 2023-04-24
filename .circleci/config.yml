@@ -1,0 +1,40 @@
+version: 2.1
+
+commands:
+  restore_gradle_cache:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-gradle-caches-{{ checksum "build.gradle.kts" }}
+            - v1-gradle-caches-
+      - restore_cache:
+          keys:
+            - v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+            - v1-gradle-wrapper-
+  save_gradle_cache:
+    steps:
+      - save_cache:
+          key: v1-gradle-caches-{{ checksum "build.gradle.kts" }}
+          paths:
+            - ~/.gradle/caches
+      - save_cache:
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+          paths:
+            - ~/.gradle/wrapper
+
+jobs:
+  build:
+    environment:
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
+    docker:
+      - image: cimg/openjdk:17.0.6
+    steps:
+      - checkout
+      - restore_gradle_cache
+      - run: ./gradlew clean build
+      - save_gradle_cache
+
+workflows:
+  main:
+    jobs:
+      - build
