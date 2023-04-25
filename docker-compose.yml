@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  app:
+    image: github.com/bkhablenko/outreach-proxx:0.1.0-SNAPSHOT
+    build:
+      context: .
+    stdin_open: true
+    tty: true

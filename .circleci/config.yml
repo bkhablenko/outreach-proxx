@@ -33,8 +33,28 @@ jobs:
       - restore_gradle_cache
       - run: ./gradlew clean build
       - save_gradle_cache
+      - persist_to_workspace:
+          root: .
+          paths:
+            - app/build/distributions/app.tar
+            - docker-compose.yml
+            - Dockerfile
+  docker:
+    docker:
+      - image: cimg/base:2023.04
+    steps:
+      - attach_workspace:
+          at: .
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: |
+            docker compose build app --no-cache
 
 workflows:
   main:
     jobs:
       - build
+      - docker:
+          requires:
+            - build
