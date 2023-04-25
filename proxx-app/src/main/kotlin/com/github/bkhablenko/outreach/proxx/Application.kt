@@ -1,7 +1,7 @@
-@file:JvmName("Application")
-
 package com.github.bkhablenko.outreach.proxx
 
+import com.github.bkhablenko.outreach.proxx.terminal.TerminalController
+
 fun main() {
-    println("Hello, World!")
+    TerminalController.launch()
 }

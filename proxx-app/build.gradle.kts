@@ -10,10 +10,13 @@ repositories {
 
 dependencies {
     implementation(project(":proxx-core"))
+
+    // https://github.com/ajalt/mordant
+    implementation("com.github.ajalt.mordant:mordant:2.0.0-beta13")
 }
 
 application {
-    mainClass.set("com.github.bkhablenko.outreach.proxx.Application")
+    mainClass.set("com.github.bkhablenko.outreach.proxx.ApplicationKt")
 }
 
 tasks {
