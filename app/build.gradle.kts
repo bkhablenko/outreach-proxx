@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":proxx-core"))
+    implementation(project(":core"))
 
     // https://github.com/ajalt/mordant
     implementation("com.github.ajalt.mordant:mordant:2.0.0-beta13")
